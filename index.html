@@ -1,0 +1,1722 @@
+ <!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CyberCommand 2026 Ultra Max - Trung Tâm An Ninh Mạng</title>
+    <style>
+        :root {
+            --bg-deep: #030014;
+            --bg-card: rgba(17, 12, 46, 0.82);
+            --neon-cyan: #00f5d4;
+            --neon-blue: #00bbf9;
+            --neon-pink: #f15bb5;
+            --neon-purple: #9b5de5;
+            --neon-gold: #fee440;
+            --neon-red: #ff2a5f;
+            --neon-green: #00e676;
+            --text-main: #ffffff;
+            --text-muted: #cbd5e1;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-deep);
+            color: var(--text-main);
+            line-height: 1.6;
+            padding-bottom: 95px;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Nền lưới 3D & Đốm sáng Aurora chuyển động */
+        .cyber-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -2;
+            background: 
+                radial-gradient(circle at 15% 15%, rgba(155, 93, 229, 0.28) 0%, transparent 45%),
+                radial-gradient(circle at 85% 25%, rgba(0, 245, 212, 0.22) 0%, transparent 45%),
+                radial-gradient(circle at 50% 85%, rgba(241, 91, 181, 0.25) 0%, transparent 50%);
+            animation: auroraShift 12s ease-in-out infinite alternate;
+        }
+
+        @keyframes auroraShift {
+            0% { filter: hue-rotate(0deg); transform: scale(1); }
+            100% { filter: hue-rotate(25deg); transform: scale(1.06); }
+        }
+
+        .cyber-grid {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            background-image: 
+                linear-gradient(rgba(0, 245, 212, 0.06) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(155, 93, 229, 0.06) 1px, transparent 1px);
+            background-size: 36px 36px;
+            animation: gridMove 20s linear infinite;
+        }
+
+        @keyframes gridMove {
+            0% { background-position: 0 0; }
+            100% { background-position: 36px 36px; }
+        }
+
+        /* Thanh tiến trình đọc trang đa sắc */
+        .progress-indicator {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 4px;
+            width: 0%;
+            background: linear-gradient(90deg, var(--neon-cyan), var(--neon-purple), var(--neon-pink), var(--neon-gold));
+            box-shadow: 0 0 12px var(--neon-pink);
+            z-index: 1000;
+        }
+
+        /* Dải băng cảnh báo cầu vồng */
+        .alert-bar {
+            background: linear-gradient(90deg, #ff0844, #ffb199, #ff0844, #9b5de5, #ff0844);
+            background-size: 300% 100%;
+            animation: rainbowFlow 6s linear infinite;
+            color: #fff;
+            padding: 9px 0;
+            font-size: 0.84rem;
+            font-weight: 800;
+            overflow: hidden;
+            white-space: nowrap;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.6);
+            border-bottom: 2px solid var(--neon-gold);
+        }
+
+        @keyframes rainbowFlow {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 300% 50%; }
+        }
+
+        .alert-ticker {
+            display: inline-block;
+            animation: tickerSlide 26s linear infinite;
+        }
+
+        @keyframes tickerSlide {
+            0% { transform: translateX(100vw); }
+            100% { transform: translateX(-100%); }
+        }
+
+        /* Header & Vòng xoay Hologram */
+        header {
+            text-align: center;
+            padding: 2.8rem 1rem 2rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+        }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(0, 245, 212, 0.15);
+            border: 1px solid var(--neon-cyan);
+            color: var(--neon-cyan);
+            padding: 5px 16px;
+            border-radius: 999px;
+            font-size: 0.78rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            margin-bottom: 1.2rem;
+            box-shadow: 0 0 20px rgba(0, 245, 212, 0.35);
+        }
+
+        .pulse-dot {
+            width: 9px;
+            height: 9px;
+            background: var(--neon-cyan);
+            border-radius: 50%;
+            animation: pulse 1s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); box-shadow: 0 0 10px var(--neon-cyan); }
+            50% { opacity: 0.3; transform: scale(0.6); }
+        }
+
+        .hologram-wrap {
+            position: relative;
+            width: 110px;
+            height: 110px;
+            margin: 0 auto 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .holo-ring {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 3px dashed var(--neon-pink);
+            border-top-color: var(--neon-cyan);
+            border-bottom-color: var(--neon-gold);
+            animation: spinRing 6s linear infinite;
+            box-shadow: 0 0 20px rgba(241, 91, 181, 0.4);
+        }
+
+        @keyframes spinRing {
+            100% { transform: rotate(360deg); }
+        }
+
+        .logo-box {
+            width: 72px;
+            height: 72px;
+            animation: floatLogo 2.8s ease-in-out infinite;
+            filter: drop-shadow(0 0 14px var(--neon-cyan));
+        }
+
+        @keyframes floatLogo {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-6px) scale(1.05); }
+        }
+
+        header h1 {
+            font-size: 2.3rem;
+            font-weight: 900;
+            background: linear-gradient(90deg, var(--neon-cyan), var(--neon-pink), var(--neon-gold), var(--neon-cyan));
+            background-size: 200% auto;
+            animation: textShine 3s linear infinite;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 0.5rem;
+        }
+
+        @keyframes textShine {
+            to { background-position: 200% center; }
+        }
+
+        header p {
+            color: var(--text-muted);
+            max-width: 650px;
+            margin: 0 auto;
+            font-size: 0.96rem;
+        }
+
+        /* Menu điều hướng phát sáng */
+        .nav-links {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-top: 1.5rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #fff;
+            background: rgba(255, 255, 255, 0.07);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            padding: 7px 14px;
+            border-radius: 999px;
+            font-size: 0.82rem;
+            font-weight: 800;
+            transition: all 0.25s;
+        }
+
+        .nav-links a:hover {
+            background: linear-gradient(135deg, var(--neon-purple), var(--neon-pink));
+            border-color: transparent;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(241, 91, 181, 0.5);
+        }
+
+        .container {
+            max-width: 980px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(25px);
+            transition: all 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Khung Panel Kính Mờ Neon */
+        .panel {
+            background: var(--bg-card);
+            backdrop-filter: blur(14px);
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            border-radius: 20px;
+            padding: 1.6rem;
+            margin-bottom: 2.2rem;
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.6);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .panel-title {
+            font-size: 1.3rem;
+            font-weight: 900;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .panel-desc {
+            color: var(--text-muted);
+            font-size: 0.92rem;
+            margin-bottom: 1.2rem;
+        }
+
+        /* Input & Nút bấm */
+        .input-row {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        input[type="text"], select {
+            flex: 1;
+            min-width: 210px;
+            padding: 13px 16px;
+            border-radius: 12px;
+            border: 1px solid rgba(0, 245, 212, 0.35);
+            background: rgba(3, 0, 20, 0.85);
+            color: #fff;
+            font-size: 0.95rem;
+            transition: 0.25s;
+        }
+
+        input[type="text"]:focus, select:focus {
+            outline: none;
+            border-color: var(--neon-pink);
+            box-shadow: 0 0 15px rgba(241, 91, 181, 0.45);
+        }
+
+        .btn {
+            position: relative;
+            overflow: hidden;
+            padding: 13px 22px;
+            border: none;
+            border-radius: 12px;
+            font-weight: 900;
+            font-size: 0.92rem;
+            cursor: pointer;
+            transition: transform 0.15s, box-shadow 0.25s;
+            color: #fff;
+        }
+
+        .btn::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 60%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.45), transparent);
+            transition: 0.5s;
+        }
+
+        .btn:hover::after { left: 130%; }
+        .btn:active { transform: scale(0.95); }
+
+        .btn-cyber {
+            background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple));
+            box-shadow: 0 4px 18px rgba(0, 187, 249, 0.45);
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, var(--neon-red), var(--neon-pink));
+            box-shadow: 0 4px 18px rgba(255, 42, 95, 0.45);
+        }
+
+        .btn-green {
+            background: linear-gradient(135deg, #00b09b, #96c93d);
+            color: #030014;
+            box-shadow: 0 4px 18px rgba(0, 230, 118, 0.4);
+        }
+
+        .scan-output {
+            margin-top: 1.1rem;
+            padding: 1.1rem;
+            border-radius: 12px;
+            display: none;
+            font-size: 0.94rem;
+            animation: popIn 0.3s ease;
+        }
+
+        @keyframes popIn {
+            0% { transform: scale(0.95); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        /* CẨM NANG 6 THỦ ĐOẠN CHI TIẾT + LASER */
+        .section-header {
+            font-size: 1.35rem;
+            font-weight: 900;
+            border-left: 5px solid var(--neon-pink);
+            padding-left: 12px;
+            margin-bottom: 1.3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .search-box {
+            padding: 8px 16px;
+            border-radius: 999px;
+            border: 1px solid var(--neon-purple);
+            background: var(--bg-card);
+            color: #fff;
+            font-size: 0.88rem;
+            min-width: 240px;
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(295px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2.4rem;
+        }
+
+        .scam-card {
+            background: var(--bg-card);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            border-top: 4px solid var(--neon-pink);
+            border-radius: 18px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .scam-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 14px 32px rgba(241, 91, 181, 0.38);
+            border-color: var(--neon-cyan);
+        }
+
+        .scam-illu {
+            background: radial-gradient(circle, rgba(241, 91, 181, 0.25) 0%, #030014 100%);
+            padding: 1.3rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .laser-line {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--neon-cyan), var(--neon-pink), transparent);
+            box-shadow: 0 0 10px var(--neon-cyan);
+            animation: scanLaser 2.8s infinite linear;
+        }
+
+        @keyframes scanLaser {
+            0% { top: 0%; }
+            50% { top: 100%; }
+            100% { top: 0%; }
+        }
+
+        .tag-risk {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: linear-gradient(90deg, var(--neon-red), var(--neon-pink));
+            color: #fff;
+            font-size: 0.68rem;
+            font-weight: 900;
+            padding: 3px 9px;
+            border-radius: 6px;
+            text-transform: uppercase;
+        }
+
+        .scam-body {
+            padding: 1.35rem;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .scam-body h3 {
+            color: var(--neon-gold);
+            font-size: 1.12rem;
+            margin-bottom: 0.7rem;
+        }
+
+        .detail-block {
+            font-size: 0.88rem;
+            color: var(--text-muted);
+            margin-bottom: 0.65rem;
+        }
+
+        .detail-block strong { color: #fff; }
+
+        .scam-sign {
+            background: rgba(255, 42, 95, 0.14);
+            border-left: 3px solid var(--neon-red);
+            padding: 8px 10px;
+            font-size: 0.84rem;
+            color: #ff9ebb;
+            border-radius: 0 8px 8px 0;
+            margin-bottom: 0.65rem;
+        }
+
+        .scam-defense {
+            background: rgba(0, 230, 118, 0.12);
+            border-left: 3px solid var(--neon-green);
+            padding: 8px 10px;
+            font-size: 0.84rem;
+            color: #86efac;
+            border-radius: 0 8px 8px 0;
+            margin-bottom: 0.9rem;
+        }
+
+        .btn-detail-modal {
+            margin-top: auto;
+            width: 100%;
+            padding: 9px;
+            border-radius: 10px;
+            border: 1px solid var(--neon-cyan);
+            background: rgba(0, 245, 212, 0.12);
+            color: var(--neon-cyan);
+            font-weight: 800;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .btn-detail-modal:hover {
+            background: var(--neon-cyan);
+            color: #030014;
+        }
+
+        /* Modal hiển thị kịch bản chi tiết */
+        .modal-backdrop {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(3, 0, 20, 0.85);
+            backdrop-filter: blur(8px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 2500;
+            padding: 1rem;
+        }
+
+        .modal-card {
+            background: linear-gradient(145deg, #110c2e, #24124d);
+            border: 2px solid var(--neon-cyan);
+            border-radius: 20px;
+            max-width: 560px;
+            width: 100%;
+            padding: 1.8rem;
+            box-shadow: 0 0 35px rgba(0, 245, 212, 0.4);
+            animation: popIn 0.25s ease;
+        }
+
+        .modal-title {
+            color: var(--neon-gold);
+            font-size: 1.25rem;
+            font-weight: 900;
+            margin-bottom: 0.8rem;
+        }
+
+        .modal-body-txt {
+            color: #e2e8f0;
+            font-size: 0.94rem;
+            line-height: 1.65;
+            margin-bottom: 1.3rem;
+        }
+
+        .modal-body-txt li {
+            margin-left: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        /* MINI GAME THÁM TỬ */
+        .game-panel {
+            background: linear-gradient(145deg, rgba(17, 12, 46, 0.9), rgba(67, 20, 107, 0.75));
+            border: 2px solid var(--neon-gold);
+            box-shadow: 0 0 30px rgba(254, 228, 64, 0.2);
+        }
+
+        .game-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 1rem;
+        }
+
+        .score-pill {
+            background: linear-gradient(135deg, rgba(254, 228, 64, 0.25), rgba(241, 91, 181, 0.25));
+            border: 1px solid var(--neon-gold);
+            color: var(--neon-gold);
+            padding: 5px 15px;
+            border-radius: 999px;
+            font-weight: 900;
+            font-size: 0.9rem;
+        }
+
+        .progress-track {
+            width: 100%;
+            height: 10px;
+            background: rgba(3, 0, 20, 0.9);
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 1.3rem;
+        }
+
+        .progress-fill {
+            height: 100%;
+            width: 20%;
+            background: linear-gradient(90deg, var(--neon-cyan), var(--neon-pink), var(--neon-gold));
+            transition: width 0.35s ease;
+        }
+
+        .chat-box {
+            background: rgba(3, 0, 20, 0.85);
+            border: 1px solid rgba(155, 93, 229, 0.45);
+            border-radius: 14px;
+            padding: 1.3rem;
+            margin-bottom: 1.2rem;
+        }
+
+        .chat-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.84rem;
+            color: var(--neon-cyan);
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+
+        .chat-msg {
+            background: linear-gradient(135deg, rgba(30, 27, 75, 0.9), rgba(49, 46, 129, 0.85));
+            padding: 15px;
+            border-radius: 4px 16px 16px 16px;
+            border-left: 4px solid var(--neon-gold);
+            font-size: 0.98rem;
+            color: #fff;
+        }
+
+        .choice-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .btn-safe {
+            background: rgba(0, 230, 118, 0.16);
+            border: 2px solid var(--neon-green);
+            color: var(--neon-green);
+            padding: 14px;
+            border-radius: 12px;
+            font-weight: 900;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .btn-safe:hover { background: var(--neon-green); color: #030014; }
+
+        .btn-scam {
+            background: rgba(255, 42, 95, 0.16);
+            border: 2px solid var(--neon-red);
+            color: #ff6b93;
+            padding: 14px;
+            border-radius: 12px;
+            font-weight: 900;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .btn-scam:hover { background: var(--neon-red); color: #fff; }
+
+        .game-feedback {
+            margin-top: 1.1rem;
+            padding: 1.1rem;
+            border-radius: 12px;
+            display: none;
+            font-size: 0.94rem;
+        }
+
+        .btn-next {
+            margin-top: 12px;
+            background: linear-gradient(90deg, var(--neon-gold), #ff9f1c);
+            color: #030014;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 900;
+            cursor: pointer;
+        }
+
+        /* BÀI TEST CHẤM ĐIỂM AN TOÀN */
+        .audit-item {
+            background: rgba(3, 0, 20, 0.7);
+            border: 1px solid rgba(0, 245, 212, 0.25);
+            border-radius: 12px;
+            padding: 12px 15px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .audit-item:hover {
+            border-color: var(--neon-cyan);
+            background: rgba(0, 245, 212, 0.08);
+        }
+
+        .audit-item input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            accent-color: var(--neon-cyan);
+            cursor: pointer;
+        }
+
+        .audit-result {
+            margin-top: 1rem;
+            padding: 1.1rem;
+            border-radius: 12px;
+            display: none;
+            font-weight: 700;
+        }
+
+        /* PHÁC ĐỒ CỨU NGUY 4 BƯỚC */
+        .sos-steps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+            gap: 12px;
+        }
+
+        .sos-step-card {
+            background: rgba(3, 0, 20, 0.75);
+            border: 1px solid rgba(255, 42, 95, 0.4);
+            border-radius: 14px;
+            padding: 1.1rem;
+            position: relative;
+        }
+
+        .sos-step-badge {
+            display: inline-block;
+            background: var(--neon-red);
+            color: #fff;
+            font-size: 0.75rem;
+            font-weight: 900;
+            padding: 2px 9px;
+            border-radius: 6px;
+            margin-bottom: 6px;
+        }
+
+        .sos-step-card h4 {
+            color: var(--neon-gold);
+            font-size: 0.98rem;
+            margin-bottom: 4px;
+        }
+
+        .sos-step-card p {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        /* ĐO ĐỘ MẠNH MẬT KHẨU */
+        .strength-meter-bar {
+            height: 8px;
+            width: 100%;
+            background: rgba(3, 0, 20, 0.9);
+            border-radius: 8px;
+            margin-top: 10px;
+            overflow: hidden;
+        }
+
+        .strength-fill {
+            height: 100%;
+            width: 0%;
+            transition: width 0.3s, background-color 0.3s;
+        }
+
+        .pwd-box {
+            background: rgba(3, 0, 20, 0.85);
+            border: 1px dashed var(--neon-cyan);
+            border-radius: 12px;
+            padding: 1.1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 1rem;
+        }
+
+        .pwd-txt {
+            font-family: monospace;
+            font-size: 1.1rem;
+            font-weight: 800;
+            color: var(--neon-cyan);
+            letter-spacing: 1.2px;
+        }
+
+        /* Danh bạ đen */
+        .blacklist-row {
+            background: rgba(3, 0, 20, 0.85);
+            border-left: 4px solid var(--neon-pink);
+            padding: 11px 15px;
+            border-radius: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+            font-size: 0.9rem;
+            margin-top: 8px;
+        }
+
+        .cat-tag {
+            background: rgba(241, 91, 181, 0.25);
+            color: #ff9ebb;
+            padding: 2px 9px;
+            border-radius: 6px;
+            font-size: 0.74rem;
+            font-weight: 800;
+        }
+
+        /* KHU VỰC VINH DANH THÀNH VIÊN (ĐÃ THÊM LỚP 12A8) */
+        .credits-panel {
+            background: linear-gradient(135deg, rgba(24, 15, 65, 0.92), rgba(76, 29, 149, 0.75), rgba(131, 24, 67, 0.75));
+            border: 2px solid rgba(241, 91, 181, 0.5);
+            border-radius: 22px;
+            padding: 2.2rem 1.5rem;
+            text-align: center;
+            box-shadow: 0 15px 40px rgba(155, 93, 229, 0.3);
+            margin-bottom: 2.2rem;
+        }
+
+        .credits-title {
+            font-size: 1.4rem;
+            font-weight: 900;
+            background: linear-gradient(90deg, #fff, var(--neon-cyan), var(--neon-gold), var(--neon-pink));
+            background-size: 200% auto;
+            animation: textShine 3s linear infinite;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            margin-bottom: 0.4rem;
+        }
+
+        .credits-sub {
+            color: #e2e8f0;
+            font-size: 0.88rem;
+            margin-bottom: 1.6rem;
+        }
+
+        .members-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+            gap: 12px;
+        }
+
+        .member-card {
+            background: rgba(3, 0, 20, 0.65);
+            border: 1px solid rgba(0, 245, 212, 0.3);
+            border-radius: 14px;
+            padding: 12px 14px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: all 0.25s;
+        }
+
+        .member-card:hover {
+            transform: translateY(-4px) scale(1.02);
+            border-color: var(--neon-gold);
+            box-shadow: 0 8px 22px rgba(254, 228, 64, 0.3);
+        }
+
+        .member-avatar {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--neon-pink), var(--neon-purple), var(--neon-blue));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            font-size: 0.95rem;
+            color: #fff;
+            flex-shrink: 0;
+            box-shadow: 0 0 10px rgba(241, 91, 181, 0.5);
+        }
+
+        .member-info { text-align: left; }
+        .member-name { font-weight: 800; font-size: 0.93rem; color: #fff; }
+        .member-role { font-size: 0.72rem; color: var(--neon-cyan); font-weight: 600; }
+
+        /* Nút SOS nổi */
+        .sos-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #ff0844, #ffb199);
+            color: #fff;
+            text-decoration: none;
+            padding: 13px 20px;
+            border-radius: 999px;
+            font-weight: 900;
+            font-size: 0.9rem;
+            border: 2px solid #fff;
+            box-shadow: 0 0 25px rgba(255, 8, 68, 0.85);
+            z-index: 999;
+            animation: sosBounce 1.8s infinite;
+        }
+
+        @keyframes sosBounce {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.07); }
+        }
+
+        /* Hiệu ứng pháo hoa Confetti */
+        .confetti-piece {
+            position: fixed;
+            width: 9px;
+            height: 9px;
+            z-index: 2000;
+            pointer-events: none;
+            animation: confettiFall 1.6s ease-out forwards;
+        }
+
+        @keyframes confettiFall {
+            0% { transform: translateY(0) rotate(0deg) scale(1); opacity: 1; }
+            100% { transform: translateY(220px) rotate(720deg) scale(0.3); opacity: 0; }
+        }
+
+        footer {
+            text-align: center;
+            padding: 1.6rem 1rem;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="cyber-bg"></div>
+    <div class="cyber-grid"></div>
+    <div class="progress-indicator" id="scrollProg"></div>
+
+    <div class="alert-bar">
+        <div class="alert-ticker">
+            🚨 CẢNH BÁO NÓNG: Không cài đặt ứng dụng .APK qua Zalo • Cảnh giác cuộc gọi Deepfake giả mạo người thân • Tuyệt đối không cung cấp mã OTP cho bất kỳ ai • Báo Công an 113 ngay khi phát hiện dấu hiệu lừa đảo!
+        </div>
+    </div>
+
+    <header>
+        <div class="status-badge">
+            <span class="pulse-dot"></span> Hệ Thống Giám Sát Không Gian Mạng
+        </div>
+        <div class="hologram-wrap">
+            <div class="holo-ring"></div>
+            <div class="logo-box">
+                <svg viewBox="0 0 64 64" fill="none">
+                    <path d="M32 4L10 14V30C10 45.5 19.4 58.6 32 62C44.6 58.6 54 45.5 54 30V14L32 4Z" fill="#1e1b4b" stroke="#00f5d4" stroke-width="3"/>
+                    <path d="M32 18L21 37H43L32 18Z" fill="#f15bb5" stroke="#ffffff" stroke-width="1.5"/>
+                    <circle cx="32" cy="31" r="3" fill="#fee440"/>
+                </svg>
+            </div>
+        </div>
+        <h1>CyberCommand 2026</h1>
+        <p>Nền tảng phân tích chi tiết các thủ đoạn lừa đảo công nghệ cao, kiểm tra mức độ bảo mật cá nhân và trang bị phác đồ xử lý khẩn cấp.</p>
+
+        <nav class="nav-links">
+            <a href="#sec-scan">🔍 Quét Rủi Ro</a>
+            <a href="#sec-tricks">⚠️ 6 Chiêu Trò Chi Tiết</a>
+            <a href="#sec-sos">🚑 Cứu Nguy 4 Bước</a>
+            <a href="#sec-game">🎮 Mini-Game</a>
+            <a href="#sec-audit">🛡️ Đo Độ An Toàn</a>
+            <a href="#sec-tools">🔐 Mật Khẩu</a>
+            <a href="#sec-credits">👥 Thành Viên</a>
+        </nav>
+    </header>
+
+    <div class="container">
+
+        <!-- 1. MÁY QUÉT RỦI RO -->
+        <section class="panel reveal" id="sec-scan" style="border-top: 4px solid var(--neon-cyan);">
+            <h2 class="panel-title" style="color: var(--neon-cyan);">🔍 Công Cụ Quét Dữ Liệu Lừa Đảo</h2>
+            <p class="panel-desc">Nhập đường link, tên tệp tin hoặc số điện thoại nghi ngờ để đối chiếu dấu hiệu vi phạm:</p>
+            <div class="input-row">
+                <input type="text" id="scanInput" placeholder="Ví dụ: http://vneid-capnhat.xyz, vneid.apk hoặc 0999999999">
+                <button type="button" class="btn btn-cyber" id="btnScan">Quét Ngay</button>
+            </div>
+            <div class="scan-output" id="scanOutput"></div>
+        </section>
+
+        <!-- 2. CẨM NANG 6 THỦ ĐOẠN CHI TIẾT -->
+        <div class="section-header reveal" id="sec-tricks">
+            <span>⚠️ Phân Tích Chuyên Sâu 6 Thủ Đoạn Lừa Đảo</span>
+            <input type="text" id="searchTrick" class="search-box" placeholder="🔍 Tìm từ khóa (VNeID, Shipper, QR...)">
+        </div>
+
+        <div class="cards-grid reveal" id="tricksGrid">
+            <!-- Thẻ 1 -->
+            <div class="scam-card" data-kw="vneid cong an thue apk chiem quyen dien thoai">
+                <div class="scam-illu">
+                    <div class="laser-line"></div>
+                    <span class="tag-risk">Rủi ro cực cao</span>
+                    <svg width="64" height="64" viewBox="0 0 64 64" fill="none">
+                        <rect x="18" y="6" width="28" height="52" rx="4" fill="#0f172a" stroke="#00f5d4" stroke-width="2"/>
+                        <path d="M32 19L21 37H43L32 19Z" fill="#ff2a5f" stroke="#fee440" stroke-width="1.2"/>
+                        <rect x="21" y="41" width="22" height="7" rx="2" fill="#ff2a5f"/>
+                        <text x="32" y="46" font-size="5" fill="#fff" font-weight="bold" text-anchor="middle">.APK MÃ ĐỘC</text>
+                    </svg>
+                </div>
+                <div class="scam-body">
+                    <h3>1. Giả mạo Công an / Thuế cài App giả</h3>
+                    <div class="detail-block"><strong>Kịch bản:</strong> Kẻ gian gọi điện đe dọa bạn liên quan đến vụ án rửa tiền, nợ thuế hoặc sai thông tin định danh VNeID mức 2, yêu cầu kết bạn Zalo để "hỗ trợ làm online".</div>
+                    <div class="scam-sign">🚩 <strong>Dấu hiệu:</strong> Gửi đường link lạ hoặc tệp tin cài đặt có đuôi <code>.apk</code>, yêu cầu cấp quyền "Trợ năng" (Accessibility) và quét khuôn mặt.</div>
+                    <div class="scam-defense">🛡️ <strong>Phòng tránh:</strong> Công an và cơ quan Thuế chỉ làm việc trực tiếp tại trụ sở, không bao giờ gửi link cài ứng dụng qua Zalo.</div>
+                    <button type="button" class="btn-detail-modal" onclick="openTrickModal(0)">📖 Xem Kịch Bản Chi Tiết</button>
+                </div>
+            </div>
+
+            <!-- Thẻ 2 -->
+            <div class="scam-card" data-kw="viec lam tiktok luong cao chot don hoa hong">
+                <div class="scam-illu">
+                    <div class="laser-line"></div>
+                    <span class="tag-risk">Phổ biến nhất</span>
+                    <svg width="64" height="64" viewBox="0 0 64 64" fill="none">
+                        <circle cx="32" cy="34" r="18" fill="#0f172a" stroke="#fee440" stroke-width="2" stroke-dasharray="3 2"/>
+                        <text x="32" y="41" font-size="20" fill="#fee440" font-weight="bold" text-anchor="middle">$</text>
+                    </svg>
+                </div>
+                <div class="scam-body">
+                    <h3>2. Bẫy "Việc nhẹ lương cao - Thả tim TikTok"</h3>
+                    <div class="detail-block"><strong>Kịch bản:</strong> Dụ dỗ làm cộng tác viên like video, nghe nhạc hoặc chốt đơn ảo tại nhà. Các đơn đầu trả hoa hồng thật rất nhanh để tạo lòng tin tuyệt đối.</div>
+                    <div class="scam-sign">🚩 <strong>Dấu hiệu:</strong> Đưa vào nhóm Telegram đông người (toàn nick ảo khoe lãi), bắt nạp tiền gói VIP cao hơn và báo "lỗi cú pháp" để ép nạp thêm.</div>
+                    <div class="scam-defense">🛡️ <strong>Phòng tránh:</strong> Tuyệt đối không chuyển tiền đặt cọc hoặc nạp tiền làm nhiệm vụ để rút hoa hồng.</div>
+                    <button type="button" class="btn-detail-modal" onclick="openTrickModal(1)">📖 Xem Kịch Bản Chi Tiết</button>
+                </div>
+            </div>
+
+            <!-- Thẻ 3 -->
+            <div class="scam-card" data-kw="deepfake ai video call muon tien nguoi than">
+                <div class="scam-illu">
+                    <div class="laser-line"></div>
+                    <span class="tag-risk">Công nghệ AI</span>
+                    <svg width="64" height="64" viewBox="0 0 64 64" fill="none">
+                        <rect x="10" y="14" width="44" height="34" rx="4" fill="#0f172a" stroke="#00bbf9" stroke-width="2"/>
+                        <circle cx="32" cy="28" r="6" stroke="#fee440" stroke-width="2"/>
+                        <circle cx="46" cy="20" r="5" fill="#f15bb5"/>
+                        <text x="46" y="23" font-size="7" fill="#fff" font-weight="bold" text-anchor="middle">AI</text>
+                    </svg>
+                </div>
+                <div class="scam-body">
+                    <h3>3. Cuộc gọi Video Deepfake mượn tiền</h3>
+                    <div class="detail-block"><strong>Kịch bản:</strong> Chiếm quyền tài khoản Facebook/Zalo của người thân/bạn bè, sau đó đọc trộm tin nhắn cũ để nắm bắt cách xưng hô.</div>
+                    <div class="scam-sign">🚩 <strong>Dấu hiệu:</strong> Hình ảnh video mờ, giật lag, khẩu hình miệng không khớp tiếng, cuộc gọi tắt sau 3–5 giây với lý do "mạng yếu" và số tài khoản nhận tiền mang tên người lạ.</div>
+                    <div class="scam-defense">🛡️ <strong>Phòng tránh:</strong> Ngắt máy và gọi lại trực tiếp qua số điện thoại di động thông thường của người thân để xác minh.</div>
+                    <button type="button" class="btn-detail-modal" onclick="openTrickModal(2)">📖 Xem Kịch Bản Chi Tiết</button>
+                </div>
+            </div>
+
+            <!-- Thẻ 4 -->
+            <div class="scam-card" data-kw="sms brandname ngan hang otp huy giao dich">
+                <div class="scam-illu">
+                    <div class="laser-line"></div>
+                    <span class="tag-risk">Thiệt hại lớn</span>
+                    <svg width="64" height="64" viewBox="0 0 64 64" fill="none">
+                        <rect x="12" y="14" width="40" height="28" rx="4" fill="#0f172a" stroke="#fee440" stroke-width="2"/>
+                        <line x1="18" y1="24" x2="44" y2="24" stroke="#ff2a5f" stroke-width="2.5"/>
+                    </svg>
+                </div>
+                <div class="scam-body">
+                    <h3>4. Tin nhắn SMS giả mạo Ngân hàng</h3>
+                    <div class="detail-block"><strong>Kịch bản:</strong> Sử dụng trạm phát sóng giả (IMSI Catcher) để chèn tin nhắn giả mạo nằm chung luồng với tin nhắn chính thức của ngân hàng trong điện thoại.</div>
+                    <div class="scam-sign">🚩 <strong>Dấu hiệu:</strong> Thông báo tài khoản bị trừ tiền hoặc hết hạn dịch vụ kèm đường link lạ (<code>.xyz</code>, <code>.top</code>) yêu cầu nhập mật khẩu và mã OTP.</div>
+                    <div class="scam-defense">🛡️ <strong>Phòng tránh:</strong> Ngân hàng không bao giờ gửi đường link đăng nhập qua tin nhắn SMS. Chỉ mở trực tiếp ứng dụng ngân hàng trên máy.</div>
+                    <button type="button" class="btn-detail-modal" onclick="openTrickModal(3)">📖 Xem Kịch Bản Chi Tiết</button>
+                </div>
+            </div>
+
+            <!-- Thẻ 5 -->
+            <div class="scam-card" data-kw="shipper giao hang the hoi vien chuyen khoan">
+                <div class="scam-illu">
+                    <div class="laser-line"></div>
+                    <span class="tag-risk">Mới bùng phát</span>
+                    <svg width="64" height="64" viewBox="0 0 64 64" fill="none">
+                        <rect x="14" y="18" width="36" height="32" rx="3" fill="#0f172a" stroke="#fee440" stroke-width="2"/>
+                        <circle cx="44" cy="44" r="8" fill="#ff2a5f"/>
+                        <text x="44" y="48" font-size="11" fill="#fff" font-weight="bold" text-anchor="middle">!</text>
+                    </svg>
+                </div>
+                <div class="scam-body">
+                    <h3>5. Giả danh Shipper dọa trừ tiền hội viên</h3>
+                    <div class="detail-block"><strong>Kịch bản:</strong> Đọc đúng tên, địa chỉ và đơn hàng bạn vừa đặt để tạo sự tin tưởng, giục chuyển khoản trước tiền hàng vì "đã gửi hàng ở bảo vệ".</div>
+                    <div class="scam-sign">🚩 <strong>Dấu hiệu:</strong> Sau khi nhận tiền, đối tượng báo "gửi nhầm số tài khoản đăng ký thẻ hội viên shipper, mỗi tháng sẽ bị tự động trừ 3.5 triệu" và gửi link dụ bấm hủy.</div>
+                    <div class="scam-defense">🛡️ <strong>Phòng tránh:</strong> Không chuyển khoản trước khi chưa tận tay kiểm tra hàng hóa và không bấm vào bất kỳ link hủy dịch vụ nào.</div>
+                    <button type="button" class="btn-detail-modal" onclick="openTrickModal(4)">📖 Xem Kịch Bản Chi Tiết</button>
+                </div>
+            </div>
+
+            <!-- Thẻ 6 -->
+            <div class="scam-card" data-kw="ma qr gia voucher tang qua quan an">
+                <div class="scam-illu">
+                    <div class="laser-line"></div>
+                    <span class="tag-risk">Cảnh giác cao</span>
+                    <svg width="64" height="64" viewBox="0 0 64 64" fill="none">
+                        <rect x="14" y="14" width="14" height="14" stroke="#00f5d4" stroke-width="2"/>
+                        <rect x="36" y="14" width="14" height="14" stroke="#00f5d4" stroke-width="2"/>
+                        <line x1="10" y1="32" x2="54" y2="32" stroke="#f15bb5" stroke-width="3"/>
+                    </svg>
+                </div>
+                <div class="scam-body">
+                    <h3>6. Dán đè mã QR giả & Quét mã nhận quà</h3>
+                    <div class="detail-block"><strong>Kịch bản:</strong> Lợi dụng lúc nhân viên cửa hàng, quán ăn sơ hở, kẻ gian dán đè miếng decal mã QR tài khoản cá nhân lên bảng mã QR thanh toán của cửa hàng.</div>
+                    <div class="scam-sign">🚩 <strong>Dấu hiệu:</strong> Miếng mã QR có dấu hiệu bị dán chồng mép giấy, hoặc tên người thụ hưởng không trùng với tên cửa hàng/công ty.</div>
+                    <div class="scam-defense">🛡️ <strong>Phòng tránh:</strong> Luôn đối chiếu kỹ tên chủ tài khoản hiển thị trên màn hình ngân hàng trước khi bấm xác nhận chuyển tiền.</div>
+                    <button type="button" class="btn-detail-modal" onclick="openTrickModal(5)">📖 Xem Kịch Bản Chi Tiết</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3. PHÁC ĐỒ CỨU NGUY KHẨN CẤP 4 BƯỚC -->
+        <section class="panel reveal" id="sec-sos" style="border-top: 4px solid var(--neon-red);">
+            <h2 class="panel-title" style="color: #ff6b93;">🚑 Phác Đồ Cứu Nguy Khi Lỡ Bấm Link Độc Hoặc Sập Bẫy</h2>
+            <p class="panel-desc">Nếu lỡ tải tệp <code>.apk</code> lạ hoặc nhập thông tin vào web giả mạo, hãy thực hiện ngay 4 bước vàng sau trong 60 giây đầu tiên:</p>
+            <div class="sos-steps-grid">
+                <div class="sos-step-card">
+                    <span class="sos-step-badge">BƯỚC 1 (0–10 GIÂY)</span>
+                    <h4>Bật Chế Độ Máy Bay</h4>
+                    <p>Tắt ngay Wi-Fi, 4G/5G hoặc rút SIM để cắt đứt hoàn toàn kết nối điều khiển từ xa của hacker.</p>
+                </div>
+                <div class="sos-step-card">
+                    <span class="sos-step-badge">BƯỚC 2 (10–30 GIÂY)</span>
+                    <h4>Gọi Khóa Thẻ Ngân Hàng</h4>
+                    <p>Mượn điện thoại khác gọi ngay tổng đài 24/7 của ngân hàng để khóa khẩn cấp toàn bộ tài khoản và thẻ.</p>
+                </div>
+                <div class="sos-step-card">
+                    <span class="sos-step-badge">BƯỚC 3 (1–5 PHÚT)</span>
+                    <h4>Đổi Mật Khẩu & Reset Máy</h4>
+                    <p>Dùng thiết bị sạch đổi mật khẩu ngân hàng, Zalo, Gmail. Sau đó khôi phục cài đặt gốc máy bị nhiễm mã độc.</p>
+                </div>
+                <div class="sos-step-card">
+                    <span class="sos-step-badge">BƯỚC 4 (NGAY LẬP TỨC)</span>
+                    <h4>Trình Báo Công An 113</h4>
+                    <p>Chụp lại sao kê, lịch sử cuộc gọi, tin nhắn làm bằng chứng và đến cơ quan Công an gần nhất trình báo.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. MINI GAME THÁM TỬ -->
+        <section class="panel game-panel reveal" id="sec-game">
+            <div class="game-top">
+                <h2 class="panel-title" style="color: var(--neon-gold); margin-bottom: 0;">🎮 Thử Thách: Thám Tử Chống Lừa Đảo</h2>
+                <span class="score-pill" id="scoreBadge">Điểm: 0 / 5</span>
+            </div>
+            <p class="panel-desc">Phán đoán xem thông điệp dưới đây là An toàn hay Bẫy lừa đảo:</p>
+
+            <div class="progress-track">
+                <div class="progress-fill" id="gameProg"></div>
+            </div>
+
+            <div id="gameBoxArea">
+                <div class="chat-box">
+                    <div class="chat-meta">
+                        <span id="chatSender">📩 SMS từ: VCB-ThongBao</span>
+                        <span id="chatCount">Tình huống 1 / 5</span>
+                    </div>
+                    <div class="chat-msg" id="chatText">
+                        Tai khoan cua ban vua bi tru 4.500.000 VND. Neu khong phai ban thuc hien, vui long bam vao http://vcb-huygiaodich.xyz de hoan tien ngay.
+                    </div>
+                </div>
+
+                <div class="choice-grid">
+                    <button type="button" class="btn-safe" id="btnSafe">✅ An Toàn</button>
+                    <button type="button" class="btn-scam" id="btnScam">🚨 Bẫy Lừa Đảo</button>
+                </div>
+
+                <div class="game-feedback" id="gameFeedback"></div>
+            </div>
+        </section>
+
+        <!-- 5. BÀI TEST ĐO MỨC ĐỘ AN TOÀN CÁ NHÂN -->
+        <section class="panel reveal" id="sec-audit" style="border-top: 4px solid var(--neon-green);">
+            <h2 class="panel-title" style="color: var(--neon-green);">🛡️ Đo Mức Độ An Toàn Kỹ Thuật Số Của Bạn</h2>
+            <p class="panel-desc">Tích chọn những thói quen bảo mật bạn đang áp dụng để hệ thống chấm điểm lá chắn cá nhân:</p>
+
+            <label class="audit-item">
+                <input type="checkbox" class="audit-chk" value="25">
+                <span>Đã cài đặt xác thực sinh trắc học (khuôn mặt/vân tay) cho ứng dụng ngân hàng.</span>
+            </label>
+            <label class="audit-item">
+                <input type="checkbox" class="audit-chk" value="25">
+                <span>Đã bật bảo mật 2 lớp (2FA) cho tài khoản Zalo, Facebook và Gmail chính.</span>
+            </label>
+            <label class="audit-item">
+                <input type="checkbox" class="audit-chk" value="25">
+                <span>Không sử dụng chung 1 mật khẩu cho tất cả các tài khoản mạng xã hội và ngân hàng.</span>
+            </label>
+            <label class="audit-item">
+                <input type="checkbox" class="audit-chk" value="25">
+                <span>Luôn gọi điện trực tiếp xác nhận khi người thân nhắn tin mượn tiền qua mạng.</span>
+            </label>
+
+            <button type="button" class="btn btn-green" id="btnCalcAudit" style="margin-top: 0.6rem;">📊 Chấm Điểm An Toàn Ngay</button>
+            <div class="audit-result" id="auditResultBox"></div>
+        </section>
+
+        <!-- 6. KIỂM TRA & TẠO MẬT KHẨU AN TOÀN -->
+        <section class="panel reveal" id="sec-tools" style="border-top: 4px solid var(--neon-gold);">
+            <h2 class="panel-title" style="color: var(--neon-gold);">🔐 Đo Độ Mạnh & Tạo Mật Khẩu Chống Hack</h2>
+            <p class="panel-desc">Nhập thử một mật khẩu bất kỳ để kiểm tra độ an toàn hoặc bấm nút tạo mật khẩu ngẫu nhiên siêu mạnh:</p>
+            
+            <div class="input-row">
+                <input type="text" id="pwdTestInput" placeholder="Gõ thử mật khẩu để kiểm tra độ mạnh...">
+            </div>
+            <div class="strength-meter-bar">
+                <div class="strength-fill" id="strengthFill"></div>
+            </div>
+            <div id="strengthLabel" style="font-size: 0.85rem; margin-top: 6px; color: var(--text-muted);">Trạng thái: Chưa nhập mật khẩu</div>
+
+            <div class="pwd-box">
+                <div class="pwd-txt" id="pwdDisplay">Cyber#2026_SecureKey!</div>
+                <div style="display:flex; gap:8px; flex-wrap:wrap;">
+                    <button type="button" class="btn btn-cyber" id="btnGenPwd">🔄 Tạo Mới</button>
+                    <button type="button" class="btn btn-green" id="btnCopyPwd">📋 Sao Chép</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 7. BÁO CÁO & DANH BẠ ĐEN -->
+        <section class="panel reveal" id="sec-report" style="border-top: 4px solid var(--neon-pink);">
+            <h2 class="panel-title" style="color: #ff9ebb;">📢 Báo Cáo & Danh Bạ Đen Cộng Đồng</h2>
+            <p class="panel-desc">Thêm số điện thoại hoặc đường link lừa đảo mới phát hiện để lưu vào cảnh báo trên thiết bị:</p>
+
+            <div class="input-row">
+                <input type="text" id="reportInput" placeholder="Nhập SĐT hoặc Link lừa đảo...">
+                <select id="reportCat">
+                    <option value="Giả mạo Shipper">Giả mạo Shipper</option>
+                    <option value="Giả Công an / Thuế">Giả Công an / Thuế</option>
+                    <option value="Link đánh cắp OTP">Link đánh cắp OTP</option>
+                    <option value="Việc nhẹ lương cao">Việc nhẹ lương cao</option>
+                </select>
+                <button type="button" class="btn btn-danger" id="btnAddReport">+ Thêm Cảnh Báo</button>
+            </div>
+
+            <div id="blacklistContainer" style="margin-top: 1rem;"></div>
+        </section>
+
+        <!-- 8. KHU VỰC VINH DANH THÀNH VIÊN (ĐÃ BỔ SUNG LỚP 12A8) -->
+        <section class="credits-panel reveal" id="sec-credits">
+            <h2 class="credits-title">👥 Đội Ngũ Sáng Tạo & Phát Triển</h2>
+            <p class="credits-sub">Dự án Nền Tảng An Ninh Mạng CyberCommand 2026 • Tập thể lớp <strong>12A8</strong></p>
+
+            <div class="members-grid">
+                <div class="member-card">
+                    <div class="member-avatar">C</div>
+                    <div class="member-info">
+                        <div class="member-name">Cao Tú Chi</div>
+                        <div class="member-role">Thành viên lớp 12A8</div>
+                    </div>
+                </div>
+
+                <div class="member-card">
+                    <div class="member-avatar">V</div>
+                    <div class="member-info">
+                        <div class="member-name">Mai Trần Thảo Vy</div>
+                        <div class="member-role">Thành viên lớp 12A8</div>
+                    </div>
+                </div>
+
+                <div class="member-card">
+                    <div class="member-avatar">V</div>
+                    <div class="member-info">
+                        <div class="member-name">Trần Ngọc Thanh Vân</div>
+                        <div class="member-role">Thành viên lớp 12A8</div>
+                    </div>
+                </div>
+
+                <div class="member-card">
+                    <div class="member-avatar">L</div>
+                    <div class="member-info">
+                        <div class="member-name">Nguyễn Thiên Lộc</div>
+                        <div class="member-role">Thành viên lớp 12A8</div>
+                    </div>
+                </div>
+
+                <div class="member-card">
+                    <div class="member-avatar">K</div>
+                    <div class="member-info">
+                        <div class="member-name">Lê Hoàng Kiệt</div>
+                        <div class="member-role">Thành viên lớp 12A8</div>
+                    </div>
+                </div>
+
+                <div class="member-card">
+                    <div class="member-avatar">H</div>
+                    <div class="member-info">
+                        <div class="member-name">Phạm Chí Hưng</div>
+                        <div class="member-role">Thành viên lớp 12A8</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- Modal Hộp thoại Xem Kịch Bản Chi Tiết -->
+    <div class="modal-backdrop" id="trickModal">
+        <div class="modal-card">
+            <h3 class="modal-title" id="modalTitle">Chi tiết thủ đoạn</h3>
+            <div class="modal-body-txt" id="modalContent"></div>
+            <button type="button" class="btn btn-cyber" style="width: 100%;" onclick="closeTrickModal()">Đã Hiểu • Đóng Cửa Sổ</button>
+        </div>
+    </div>
+
+    <a href="tel:113" class="sos-btn">📞 Gọi Khẩn Cấp 113</a>
+
+    <footer>
+        <p>Đường dây nóng hỗ trợ: <strong>113</strong> (Công an) hoặc <strong>156</strong> (Cục An toàn thông tin)</p>
+        <p style="margin-top: 4px;">© 2026 CyberCommand - Trung Tâm An Ninh Mạng Trực Tuyến (Lớp 12A8)</p>
+    </footer>
+
+    <script>
+        // 1. Thanh cuộn trang & Hiệu ứng Reveal
+        function checkReveal() {
+            var st = document.documentElement.scrollTop || document.body.scrollTop;
+            var sh = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            if (sh > 0) {
+                document.getElementById("scrollProg").style.width = (st / sh) * 100 + "%";
+            }
+            var reveals = document.querySelectorAll(".reveal");
+            for (var i = 0; i < reveals.length; i++) {
+                if (reveals[i].getBoundingClientRect().top < window.innerHeight - 40) {
+                    reveals[i].classList.add("active");
+                }
+            }
+        }
+        window.addEventListener("scroll", checkReveal);
+        setTimeout(checkReveal, 100);
+
+        // Hiệu ứng Pháo hoa Confetti
+        function launchConfetti() {
+            var colors = ["#00f5d4", "#f15bb5", "#fee440", "#00bbf9", "#9b5de5", "#00e676"];
+            for (var i = 0; i < 35; i++) {
+                var p = document.createElement("div");
+                p.className = "confetti-piece";
+                p.style.left = (Math.random() * 90 + 5) + "vw";
+                p.style.top = (Math.random() * 30 + 25) + "vh";
+                p.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                p.style.borderRadius = Math.random() > 0.5 ? "50%" : "2px";
+                document.body.appendChild(p);
+                (function(el) {
+                    setTimeout(function() { el.remove(); }, 1600);
+                })(p);
+            }
+        }
+
+        // 2. Dữ liệu Modal Chi Tiết 6 Thủ Đoạn
+        var trickDetailsData = [
+            {
+                title: "1. Chi tiết bẫy Giả mạo Công an / Thuế cài App mã độc",
+                html: "<ul>" +
+                      "<li><strong>Bước 1 (Gây hoảng loạn):</strong> Đối tượng gọi điện xưng là cán bộ Công an hoặc Chi cục Thuế, đọc chính xác số CCCD của bạn và thông báo bạn liên quan đến đường dây tội phạm hoặc đang nợ thuế doanh nghiệp.</li>" +
+                      "<li><strong>Bước 2 (Cô lập nạn nhân):</strong> Yêu cầu bạn vào phòng kín, giữ bí mật tuyệt đối không được kể với người thân, kết bạn Zalo để làm việc trực tuyến.</li>" +
+                      "<li><strong>Bước 3 (Cài mã độc):</strong> Gửi đường link trang web giả giao diện Dịch vụ công hoặc Bộ Công an, dụ tải tệp tin đuôi <code>.apk</code>. Khi bạn cài đặt và cấp quyền Trợ năng, kẻ gian sẽ chiếm toàn quyền điều khiển màn hình điện thoại, đọc trộm mã OTP ngân hàng và rút sạch tiền trong tài khoản.</li>" +
+                      "</ul>"
+            },
+            {
+                title: "2. Chi tiết bẫy 'Việc nhẹ lương cao - Thả tim TikTok'",
+                html: "<ul>" +
+                      "<li><strong>Bước 1 (Thả mồi nhỏ):</strong> Nhắn tin mời làm cộng tác viên tại nhà với công việc đơn giản như nhấn thích video TikTok, nghe nhạc hoặc tăng tương tác. 2–3 nhiệm vụ đầu bạn được chuyển khoản trả hoa hồng 30.000đ – 50.000đ rất sòng phẳng.</li>" +
+                      "<li><strong>Bước 2 (Tạo hiệu ứng đám đông):</strong> Đưa bạn vào nhóm kín trên Telegram có hàng chục tài khoản ảo liên tục khoe ảnh chuyển khoản kiếm tiền triệu mỗi ngày.</li>" +
+                      "<li><strong>Bước 3 (Chiếm đoạt):</strong> Yêu cầu chuyển khoản từ vài triệu đến hàng trăm triệu đồng để nâng cấp gói nhiệm vụ VIP. Khi bạn muốn rút tiền, chúng viện cớ 'chuyển sai cú pháp', 'lỗi hệ thống' để ép nạp thêm cho đến khi bạn hết sạch tiền.</li>" +
+                      "</ul>"
+            },
+            {
+                title: "3. Chi tiết bẫy Cuộc gọi Video Deepfake mượn tiền",
+                html: "<ul>" +
+                      "<li><strong>Bước 1 (Chiếm tài khoản):</strong> Kẻ gian hack tài khoản Facebook hoặc Zalo của người thân/bạn bè của bạn, sau đó đọc trộm tin nhắn cũ để nắm bắt cách xưng hô.</li>" +
+                      "<li><strong>Bước 2 (Tạo video AI):</strong> Dùng công nghệ Deepfake ghép khuôn mặt người thân từ ảnh công khai vào một đoạn video ngắn 3–5 giây có chất lượng mờ nhòe.</li>" +
+                      "<li><strong>Bước 3 (Thúc giục chuyển tiền):</strong> Gọi video cho bạn để tạo lòng tin rằng đúng là người thân đang gọi, sau đó tắt máy ngay lấy cớ 'mạng yếu, đang ở bệnh viện/công trường' và nhắn tin giục chuyển gấp tiền vào một số tài khoản ngân hàng mang tên người lạ.</li>" +
+                      "</ul>"
+            },
+            {
+                title: "4. Chi tiết bẫy Tin nhắn SMS giả mạo Ngân hàng",
+                html: "<ul>" +
+                      "<li><strong>Bước 1 (Chèn tin nhắn giả):</strong> Kẻ gian sử dụng thiết bị phát sóng trạm gốc giả (IMSI Catcher) di chuyển quanh khu vực đông dân cư để gửi tin nhắn có tên thương hiệu giống hệt ngân hàng thật.</li>" +
+                      "<li><strong>Bước 2 (Đánh vào tâm lý lo sợ):</strong> Nội dung tin nhắn báo tài khoản của bạn vừa bị trừ một khoản tiền lớn hoặc sắp bị khóa dịch vụ, kèm đường link giả mạo giao diện ngân hàng.</li>" +
+                      "<li><strong>Bước 3 (Đánh cắp OTP):</strong> Khi bạn bấm vào link và nhập tên đăng nhập, mật khẩu cùng mã OTP để 'hủy giao dịch', toàn bộ thông tin sẽ lập tức được gửi về máy chủ của kẻ gian để thực hiện lệnh rút tiền thật.</li>" +
+                      "</ul>"
+            },
+            {
+                title: "5. Chi tiết bẫy Giả danh Shipper dọa trừ tiền hội viên",
+                html: "<ul>" +
+                      "<li><strong>Bước 1 (Lấy lòng tin):</strong> Kẻ gian gọi điện đọc chính xác tên, địa chỉ và thông tin đơn hàng bạn đang chờ nhận, báo đã để hàng ở cổng hoặc gửi bảo vệ và yêu cầu chuyển khoản thanh toán trước.</li>" +
+                      "<li><strong>Bước 2 (Hù dọa):</strong> Ngay sau khi bạn chuyển khoản, chúng gọi lại hốt hoảng báo rằng 'em gửi nhầm số tài khoản đăng ký thẻ hội viên shipper, hệ thống sẽ tự động trừ 3.500.000đ mỗi tháng từ tài khoản của anh/chị'.</li>" +
+                      "<li><strong>Bước 3 (Dẫn dụ bấm link):</strong> Gửi một đường link giả mạo trung tâm vận chuyển để dụ bạn nhập thông tin ngân hàng và mã OTP nhằm hủy thẻ hội viên.</li>" +
+                      "</ul>"
+            },
+            {
+                title: "6. Chi tiết bẫy Dán đè mã QR giả & Quét mã nhận quà",
+                html: "<ul>" +
+                      "<li><strong>Bước 1 (Đánh tráo mã tại điểm bán):</strong> Lợi dụng lúc nhân viên cửa hàng, quán ăn sơ hở, kẻ gian dán đè miếng decal mã QR tài khoản cá nhân lên bảng mã QR thanh toán của cửa hàng.</li>" +
+                      "<li><strong>Bước 2 (Gửi mã QR trúng thưởng):</strong> Hoặc gửi thư/tin nhắn kèm mã QR mời quét để nhận voucher giảm giá, hoàn tiền tri ân khách hàng.</li>" +
+                      "<li><strong>Bước 3 (Chiếm đoạt):</strong> Khách hàng quét mã chuyển tiền thanh toán nhưng tiền lại chảy vào túi kẻ gian, hoặc mã QR dẫn tới trang web chứa mã độc đánh cắp thông tin cá nhân.</li>" +
+                      "</ul>"
+            }
+        ];
+
+        function openTrickModal(idx) {
+            document.getElementById("modalTitle").innerText = trickDetailsData[idx].title;
+            document.getElementById("modalContent").innerHTML = trickDetailsData[idx].html;
+            document.getElementById("trickModal").style.display = "flex";
+        }
+
+        function closeTrickModal() {
+            document.getElementById("trickModal").style.display = "none";
+        }
+
+        // 3. Danh bạ đen & Máy quét
+        var dbList = [
+            { query: "0999999999", type: "Giả Công an / Thuế" },
+            { query: "http://vneid-capnhat.xyz", type: "Link mã độc đánh cắp OTP" },
+            { query: "vcb-huygiaodich.xyz", type: "Trang web giả mạo ngân hàng" }
+        ];
+
+        function renderBlacklist() {
+            var container = document.getElementById("blacklistContainer");
+            container.innerHTML = "";
+            for (var i = 0; i < dbList.length; i++) {
+                (function(idx) {
+                    var item = dbList[idx];
+                    var row = document.createElement("div");
+                    row.className = "blacklist-row";
+                    row.innerHTML = '<div><strong style="color:#fff;">🚨 ' + item.query + '</strong> <span class="cat-tag">' + item.type + '</span></div>';
+                    
+                    var delBtn = document.createElement("button");
+                    delBtn.type = "button";
+                    delBtn.innerText = "✖ Xóa";
+                    delBtn.style.cssText = "background:none; border:none; color:#cbd5e1; cursor:pointer; font-size:0.82rem;";
+                    delBtn.onclick = function() {
+                        dbList.splice(idx, 1);
+                        renderBlacklist();
+                    };
+                    row.appendChild(delBtn);
+                    container.appendChild(row);
+                })(i);
+            }
+        }
+
+        document.getElementById("btnAddReport").onclick = function() {
+            var inp = document.getElementById("reportInput");
+            var cat = document.getElementById("reportCat");
+            var val = inp.value.trim();
+            if (!val) {
+                alert("Vui lòng nhập thông tin cần báo cáo!");
+                return;
+            }
+            dbList.unshift({ query: val, type: cat.value });
+            inp.value = "";
+            renderBlacklist();
+            launchConfetti();
+        };
+
+        document.getElementById("btnScan").onclick = function() {
+            var q = document.getElementById("scanInput").value.trim().toLowerCase();
+            var out = document.getElementById("scanOutput");
+            if (!q) {
+                alert("Vui lòng nhập thông tin cần quét!");
+                return;
+            }
+            out.style.display = "block";
+            var matched = false;
+            var matchType = "";
+
+            for (var i = 0; i < dbList.length; i++) {
+                if (q.indexOf(dbList[i].query.toLowerCase()) !== -1) {
+                    matched = true;
+                    matchType = dbList[i].type;
+                    break;
+                }
+            }
+
+            var risks = [".xyz", ".top", ".apk", ".exe", "vneid", "dichvucong", "huygiaodich", "shipper"];
+            var hasRisk = false;
+            for (var r = 0; r < risks.length; r++) {
+                if (q.indexOf(risks[r]) !== -1) {
+                    hasRisk = true;
+                    break;
+                }
+            }
+
+            if (matched) {
+                out.style.backgroundColor = "rgba(255, 42, 95, 0.22)";
+                out.style.border = "1px solid #ff2a5f";
+                out.style.color = "#ff9ebb";
+                out.innerHTML = "⚠️ <strong>CẢNH BÁO NGUY HIỂM:</strong> Trùng khớp với danh sách đen (" + matchType + ")!<br>👉 <strong>Tuyệt đối không tương tác hoặc cung cấp thông tin!</strong>";
+            } else if (hasRisk || q.indexOf("http://") === 0) {
+                out.style.backgroundColor = "rgba(254, 228, 64, 0.2)";
+                out.style.border = "1px solid #fee440";
+                out.style.color = "#fef08a";
+                out.innerHTML = "⚡ <strong>CẢNH BÁO RỦI RO:</strong> Phát hiện từ khóa hoặc tên miền đáng ngờ.<br>👉 <em>Hãy thận trọng và xác minh kỹ trước khi bấm vào!</em>";
+            } else {
+                out.style.backgroundColor = "rgba(0, 230, 118, 0.2)";
+                out.style.border = "1px solid #00e676";
+                out.style.color = "#6ee7b7";
+                out.innerHTML = "✅ <strong>CHƯA PHÁT HIỆN CẢNH BÁO:</strong> Không tìm thấy trong cơ sở dữ liệu hiện tại.<br>👉 <em>Tuy nhiên vẫn luôn cảnh giác với mã OTP!</em>";
+            }
+        };
+
+        // 4. Mini Game Thám Tử
+        var questions = [
+            {
+                sender: "📩 SMS từ: VCB-ThongBao",
+                text: "Tai khoan cua ban vua bi tru 4.500.000 VND. Neu khong phai ban thuc hien, vui long bam vao http://vcb-huygiaodich.xyz de hoan tien ngay.",
+                isScam: true,
+                explain: "Ngân hàng không gửi link qua SMS để hủy giao dịch. Đuôi .xyz là website lừa đảo."
+            },
+            {
+                sender: "📞 Cuộc gọi từ: Cán bộ Công an",
+                text: "Anh/chị chưa cập nhật định danh VNeID mức 2. Kết bạn Zalo tôi gửi file VNeID_CapNhat.apk cài vào máy để làm online.",
+                isScam: true,
+                explain: "Công an không làm việc qua Zalo và không yêu cầu cài tệp .apk ngoài cửa hàng ứng dụng."
+            },
+            {
+                sender: "🏦 Thông báo từ App Ngân hàng chính thức",
+                text: "Mã OTP giao dịch chuyển khoản của Quý khách là 849201. Tuyệt đối không chia sẻ mã này cho bất kỳ ai.",
+                isScam: false,
+                explain: "Đây là tin nhắn OTP bảo mật tiêu chuẩn từ hệ thống ngân hàng chính thống."
+            },
+            {
+                sender: "📦 Cuộc gọi từ: Shipper giao hàng",
+                text: "Em giao đơn hàng 120k nhưng anh không có nhà. Bấm vào link này xác nhận chuyển khoản gấp không bên em phạt tiền!",
+                isScam: true,
+                explain: "Shipper chính hãng không bao giờ gửi link lạ bắt bấm xác nhận qua mạng."
+            },
+            {
+                sender: "💬 Tin nhắn Facebook từ: Bạn thân",
+                text: "Ê mày đang rảnh không cho tao mượn gấp 2 triệu, chuyển qua STK ngân hàng khác tên này giùm tao có việc gấp.",
+                isScam: true,
+                explain: "Tài khoản có thể đã bị chiếm đoạt. Luôn gọi điện thoại trực tiếp để xác thực."
+            }
+        ];
+
+        var curStep = 0;
+        var curScore = 0;
+        var isLocked = false;
+
+        function loadGameStage() {
+            isLocked = false;
+            var item = questions[curStep];
+            document.getElementById("chatSender").innerText = item.sender;
+            document.getElementById("chatCount").innerText = "Tình huống " + (curStep + 1) + " / " + questions.length;
+            document.getElementById("chatText").innerText = item.text;
+            document.getElementById("gameProg").style.width = (((curStep + 1) / questions.length) * 100) + "%";
+
+            var fb = document.getElementById("gameFeedback");
+            fb.style.display = "none";
+            fb.innerHTML = "";
+        }
+
+        function answerGame(userScam) {
+            if (isLocked) return;
+            isLocked = true;
+
+            var item = questions[curStep];
+            var fb = document.getElementById("gameFeedback");
+            var correct = (userScam === item.isScam);
+
+            if (correct) {
+                curScore++;
+                launchConfetti();
+                fb.style.backgroundColor = "rgba(0, 230, 118, 0.2)";
+                fb.style.border = "1px solid #00e676";
+                fb.style.color = "#6ee7b7";
+                fb.innerHTML = "🎉 <strong>CHÍNH XÁC!</strong> " + item.explain;
+            } else {
+                fb.style.backgroundColor = "rgba(255, 42, 95, 0.2)";
+                fb.style.border = "1px solid #ff2a5f";
+                fb.style.color = "#ff9ebb";
+                fb.innerHTML = "❌ <strong>CẨN THẬN SẬP BẪY!</strong> " + item.explain;
+            }
+
+            document.getElementById("scoreBadge").innerText = "Điểm: " + curScore + " / " + questions.length;
+
+            var nextBtn = document.createElement("button");
+            nextBtn.type = "button";
+            nextBtn.className = "btn-next";
+            nextBtn.innerText = (curStep < questions.length - 1) ? "Tình huống tiếp theo ➔" : "Xem Tổng Kết 🏆";
+            nextBtn.onclick = function() {
+                curStep++;
+                if (curStep < questions.length) {
+                    loadGameStage();
+                } else {
+                    renderSummary();
+                }
+            };
+
+            fb.appendChild(document.createElement("br"));
+            fb.appendChild(nextBtn);
+            fb.style.display = "block";
+        }
+
+        function renderSummary() {
+            launchConfetti();
+            var area = document.getElementById("gameBoxArea");
+            var title = curScore === 5 ? "🏆 XUẤT SẮC — Chuyên gia bảo mật!" : "⚡ Hoàn thành thử thách tốt!";
+            area.innerHTML = 
+                '<div style="text-align:center; padding:1.6rem; background:rgba(3,0,20,0.9); border:2px dashed var(--neon-gold); border-radius:14px;">' +
+                '<h3 style="color:var(--neon-gold); font-size:1.3rem; margin-bottom:0.4rem;">Tổng Kết: ' + curScore + '/' + questions.length + ' Điểm</h3>' +
+                '<p style="color:#fff; margin-bottom:1.1rem;">' + title + '</p>' +
+                '<button type="button" class="btn btn-cyber" id="btnRestart">🔄 Chơi Lại</button>' +
+                '</div>';
+            document.getElementById("btnRestart").onclick = function() { location.reload(); };
+        }
+
+        document.getElementById("btnSafe").onclick = function() { answerGame(false); };
+        document.getElementById("btnScam").onclick = function() { answerGame(true); };
+
+        // 5. Bài Test Chấm Điểm An Toàn Cá Nhân
+        document.getElementById("btnCalcAudit").onclick = function() {
+            var checks = document.querySelectorAll(".audit-chk");
+            var total = 0;
+            for (var i = 0; i < checks.length; i++) {
+                if (checks[i].checked) total += parseInt(checks[i].value, 10);
+            }
+            var res = document.getElementById("auditResultBox");
+            res.style.display = "block";
+
+            if (total === 100) {
+                launchConfetti();
+                res.style.backgroundColor = "rgba(0, 230, 118, 0.2)";
+                res.style.border = "1px solid #00e676";
+                res.style.color = "#6ee7b7";
+                res.innerHTML = "🏆 Điểm an toàn: 100/100! Lá chắn bảo mật của bạn cực kỳ vững chắc!";
+            } else if (total >= 50) {
+                res.style.backgroundColor = "rgba(254, 228, 64, 0.2)";
+                res.style.border = "1px solid #fee440";
+                res.style.color = "#fef08a";
+                res.innerHTML = "⚡ Điểm an toàn: " + total + "/100. Bạn đã có nền tảng tốt nhưng nên bật đủ các lớp bảo mật còn thiếu!";
+            } else {
+                res.style.backgroundColor = "rgba(255, 42, 95, 0.22)";
+                res.style.border = "1px solid #ff2a5f";
+                res.style.color = "#ff9ebb";
+                res.innerHTML = "⚠️ Điểm an toàn: " + total + "/100 (Mức rủi ro cao). Hãy thiết lập ngay sinh trắc học và bảo mật 2 lớp!";
+            }
+        };
+
+        // 6. Đo Độ Mạnh & Tạo Mật Khẩu
+        document.getElementById("pwdTestInput").onkeyup = function() {
+            var val = this.value;
+            var fill = document.getElementById("strengthFill");
+            var lbl = document.getElementById("strengthLabel");
+
+            if (!val) {
+                fill.style.width = "0%";
+                lbl.innerText = "Trạng thái: Chưa nhập mật khẩu";
+                lbl.style.color = "#cbd5e1";
+                return;
+            }
+
+            var score = 0;
+            if (val.length >= 8) score += 25;
+            if (val.length >= 12) score += 25;
+            if (/[A-Z]/.test(val) && /[a-z]/.test(val)) score += 25;
+            if (/[0-9]/.test(val) && /[^A-Za-z0-9]/.test(val)) score += 25;
+
+            fill.style.width = score + "%";
+            if (score <= 25) {
+                fill.style.backgroundColor = "#ff2a5f";
+                lbl.innerText = "Độ mạnh: YẾU (Hacker có thể dò ra trong vài giây!)";
+                lbl.style.color = "#ff6b93";
+            } else if (score <= 75) {
+                fill.style.backgroundColor = "#fee440";
+                lbl.innerText = "Độ mạnh: TRUNG BÌNH (Nên thêm ký tự đặc biệt và chữ hoa)";
+                lbl.style.color = "#fee440";
+            } else {
+                fill.style.backgroundColor = "#00e676";
+                lbl.innerText = "Độ mạnh: RẤT MẠNH (An toàn cao trước các công cụ bẻ khóa)";
+                lbl.style.color = "#00e676";
+            }
+        };
+
+        document.getElementById("btnGenPwd").onclick = function() {
+            var chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$!%*?&";
+            var pwd = "";
+            for (var i = 0; i < 14; i++) {
+                pwd += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            document.getElementById("pwdDisplay").innerText = pwd;
+            launchConfetti();
+        };
+
+        document.getElementById("btnCopyPwd").onclick = function() {
+            var txt = document.getElementById("pwdDisplay").innerText;
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(txt);
+                alert("Đã sao chép mật khẩu: " + txt);
+            } else {
+                alert("Mật khẩu của bạn là: " + txt);
+            }
+        };
+
+        // 7. Tìm kiếm realtime cẩm nang
+        document.getElementById("searchTrick").onkeyup = function() {
+            var val = this.value.toLowerCase().trim();
+            var cards = document.querySelectorAll(".scam-card");
+            for (var i = 0; i < cards.length; i++) {
+                var kw = cards[i].getAttribute("data-kw");
+                var txt = cards[i].innerText.toLowerCase();
+                if (kw.indexOf(val) !== -1 || txt.indexOf(val) !== -1 || val === "") {
+                    cards[i].style.display = "flex";
+                } else {
+                    cards[i].style.display = "none";
+                }
+            }
+        };
+
+        // Khởi chạy dữ liệu
+        renderBlacklist();
+        loadGameStage();
+    </script>
+</body>
+</html>
